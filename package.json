@@ -1,0 +1,11 @@
+{
+  "name": "chrome-video-parser-plugin",
+  "version": "1.0.0",
+  "description": "a chrome extension to parser vip videos",
+  "main": "background.js",
+  "scripts": {
+    "build": ""
+  },
+  "author": "lzhou",
+  "license": "MIT"
+}
