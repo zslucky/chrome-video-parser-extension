@@ -1,7 +1,7 @@
 {
   "name": "chrome-video-parser-plugin",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "a chrome extension to parser vip videos",
   "permissions": ["activeTab", "declarativeContent"],
   "background": {
     "scripts": ["background.js"],

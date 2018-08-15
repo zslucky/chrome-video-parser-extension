@@ -4,7 +4,9 @@
   "description": "a chrome extension to parser vip videos",
   "main": "background.js",
   "scripts": {
-    "build": ""
+    "clean": "rm extension.crx",
+    "gen": "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome --pack-extension=/Users/lzhou/Workspace/self-projects/chrome-video-parser-extension/extension --pack-extension-key=/Users/lzhou/Dropbox/privacy/chrome-video-parser-extension/chrome-video-parser-extension.pem",
+    "build": "npm run clean && npm run gen"
   },
   "author": "lzhou",
   "license": "MIT"
