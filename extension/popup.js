@@ -1,30 +1,68 @@
-// https://iodefog.github.io/text/viplist.json
-const myProjectLink = document.getElementById('myProject');
+/**
+ * Popup.js
+ *
+ * @author: zslucky
+ */
+const TIME_OUT = 2000
+const viplist = 'https://iodefog.github.io/text/viplist.json'
+// const backupViplist = ''
+const list = document.getElementById('list')
 
-const wq114 = document.getElementById('wq114');
-const jx618g = document.getElementById('jx618g');
-const baiyug = document.getElementById('baiyug');
+const getStoredVipList = () =>
+  new Promise((resolve, reject) => {
+    chrome.storage.local.get(['viplist'], result => resolve(result.viplist))
+  })
 
-myProjectLink.onclick = (element) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    chrome.tabs.executeScript({ file: 'src/projectLink.js' })
-  });
-}
+const timeoutPromise = timeout =>
+  new Promise((resolve, reject) => {
+    setTimeout(() => {
+      getStoredVipList()
+        .then(data => resolve(data))
+    }, timeout)
+  })
 
-wq114.onclick = (element) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    chrome.tabs.executeScript({ file: 'src/www.wq114.org.js' })
-  });
-}
+const fetchNewListPromise = () =>
+  fetch(viplist)
+    .then(resp => resp.json())
+    .then((data) => {
+      chrome.storage.local.set({ viplist: data })
+      return data
+    })
 
-jx618g.onclick = (element) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    chrome.tabs.executeScript({ file: 'src/jx.618g.com.js' })
-  });
-}
+const selectLine = url =>
+  chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+    console.log('tabs = ', tabs)
+    console.log('chrome.tabs = ', chrome.tabs)
+    chrome.tabs.executeScript({
+      code: [
+        'const videoUrl = window.encodeURIComponent(window.location.href)',
+        'const url = `' + url + '${videoUrl}`',
+        'location.href = url'
+      ].join(';')
+    })
+  })
 
-baiyug.onclick = (element) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-    chrome.tabs.executeScript({ file: 'src/api.baiyug.vip.js' })
-  });
-}
+const listEventProxy = event => selectLine(event.target.dataset.url)
+
+list.addEventListener('click', listEventProxy)
+
+getStoredVipList()
+  .then((data) => {
+    let resultPromise
+    if (!data) {
+      resultPromise = fetchNewListPromise()
+    } else {
+      resultPromise = Promise.race([timeoutPromise(TIME_OUT), fetchNewListPromise()])
+    }
+
+    resultPromise
+      .then((data) => {
+        list.innerHTML = (data.list || [])
+          .map(line => `<li data-url="${line.url}">${line.name}</li>`).join('')
+      })
+      .catch((err) => {
+        list.innerHTML = 'Ops!好像出错了!'
+      })
+  })
+
+
