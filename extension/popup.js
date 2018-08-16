@@ -5,7 +5,7 @@
  */
 const TIME_OUT = 2000
 const viplist = 'https://iodefog.github.io/text/viplist.json'
-// const backupViplist = ''
+// const backupViplist = 'https://github.com/zslucky/chrome-video-parser-extension/raw/master/backup/viplist.backup.20180815.json'
 const list = document.getElementById('list')
 
 const getStoredVipList = () =>

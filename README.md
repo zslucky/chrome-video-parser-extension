@@ -9,8 +9,8 @@
 
 ### 如何使用
 
-1. 下载最新插件 [extension.crx](#)
-2. 打开chrome插件设置[页面](chrome:extensions)（在地址栏中输入`chrome:extensions`）
+1. 下载最新插件 [extension.crx](https://github.com/zslucky/chrome-video-parser-extension/raw/master/extension.crx)
+2. 打开chrome插件设置[页面](chrome://extensions)（在地址栏中输入`chrome:extensions`）
 3. 将下载到的extension.crx拖动到设置页面上
 4. 点击确定添加插件
 5. 到你想要观看的视频的页面，此时插件图标已经不再是灰色的了。
