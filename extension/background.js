@@ -2,7 +2,7 @@
  * Declare active hosts
  */
 const activeHosts = [
-  { hostEquals: 'www.iqiyi.com', schemes: [ 'http' ] },
+  { hostEquals: 'www.iqiyi.com', schemes: [ 'http', 'https' ] },
   { hostEquals: 'v.qq.com', schemes: [ 'http', 'https' ] },
 ]
 
